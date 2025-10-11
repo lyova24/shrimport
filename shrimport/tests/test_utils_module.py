@@ -1,6 +1,6 @@
 import libcst as cst
 
-from src.utils.module import get_full_module_name, make_module_attr
+from shrimport.utils.module import get_full_module_name, make_module_attr
 
 
 def test_make_module_attr_none():

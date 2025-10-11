@@ -3,9 +3,13 @@ from typing import TYPE_CHECKING
 
 import libcst as cst
 
-from src.config import Config
-from src.logger import get_logger
-from src.utils import exit_if_path_is_not_a_dir, get_path_from_str, get_paths_from_list
+from shrimport.config import Config
+from shrimport.logger import get_logger
+from shrimport.utils import (
+    exit_if_path_is_not_a_dir,
+    get_path_from_str,
+    get_paths_from_list,
+)
 
 from .import_transformer import ImportTransformer
 
@@ -13,7 +17,7 @@ if TYPE_CHECKING:
     from pathlib import Path
     from typing import Pattern
 
-    from src.logger import ShrimportLogger
+    from shrimport.logger import ShrimportLogger
 
 
 class ImportFormatter:

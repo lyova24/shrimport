@@ -7,7 +7,7 @@ def get_args() -> argparse.Namespace:
         "-R",
         "--root-dir",
         default=".",
-        help="path to root directory (e.g., ./src)",
+        help="path to root directory (e.g., ./shrimport)",
     )
     parser.add_argument(
         "-i",

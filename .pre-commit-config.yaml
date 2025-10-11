@@ -3,7 +3,7 @@ repos:
     hooks:
       - id: shrimport
         name: Shrimport (local)
-        entry: python -m main
+        entry: python -m shrimport.main
         language: python
         additional_dependencies: [ libcst>=1.0.0 ]
         files: \.py$

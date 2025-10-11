@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from src.utils.path import (
+from shrimport.utils.path import (
     exit_if_path_is_not_a_dir,
     get_module_path,
     get_path_from_str,
@@ -26,7 +26,7 @@ def test_get_paths_from_list(tmp_path):
 
 
 def test_get_module_path_relative(tmp_path):
-    root = tmp_path / "src"
+    root = tmp_path / "shrimport"
     root.mkdir()
     file = root / "pkg" / "mod.py"
     file.parent.mkdir(parents=True)
@@ -36,7 +36,7 @@ def test_get_module_path_relative(tmp_path):
 
 
 def test_get_module_path_not_in_root(tmp_path, capsys):
-    root = tmp_path / "src"
+    root = tmp_path / "shrimport"
     root.mkdir()
     file = tmp_path / "other.py"
     file.write_text("x")
