@@ -1,13 +1,23 @@
 import sys
 
-from src.config import Config, get_config
+from shrimport.config import Config, get_config
 
 
 def test_config_get_from_arguments(monkeypatch):
-    test_args = ["prog", "-R", "src", "-i", "ignoreme", "-v", "-d", "main.py", "foo.py"]
+    test_args = [
+        "prog",
+        "-R",
+        "shrimport",
+        "-i",
+        "ignoreme",
+        "-v",
+        "-d",
+        "main.py",
+        "foo.py",
+    ]
     monkeypatch.setattr(sys, "argv", test_args)
     config = Config.get_from_arguments()
-    assert config.root_dir == "src"
+    assert config.root_dir == "shrimport"
     assert config.is_verbose is True
     assert config.is_dry_run is True
     assert config.file_paths == ["main.py", "foo.py"]

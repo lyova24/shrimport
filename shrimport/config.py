@@ -2,7 +2,7 @@ import dataclasses
 from dataclasses import dataclass, field, fields
 from functools import lru_cache
 
-from src.utils import get_args
+from shrimport.utils import get_args
 
 
 @dataclass

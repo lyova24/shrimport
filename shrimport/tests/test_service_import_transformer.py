@@ -1,6 +1,6 @@
 import libcst as cst
 
-from src.service.import_transformer import ImportTransformer
+from shrimport.service.import_transformer import ImportTransformer
 
 
 def make_tree(source):

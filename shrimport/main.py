@@ -1,5 +1,5 @@
-from src.config import get_config
-from src.service import ImportFormatter
+from shrimport.config import get_config
+from shrimport.service import ImportFormatter
 
 
 def main():

@@ -3,7 +3,7 @@ import sys
 from enum import StrEnum
 from typing import TYPE_CHECKING
 
-from src.config import get_config
+from shrimport.config import get_config
 
 if TYPE_CHECKING:
     from pathlib import Path

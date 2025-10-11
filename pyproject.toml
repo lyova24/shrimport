@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shrimport"
+version = "0.1.2"
+description = "Shrimport is a pre-commit-hook to format Python multi-level relative imports as absolute ones"
+readme = "readme.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "lyova24", email = "lengthylyova@gmail.com" }
+]
+
+dependencies = [
+    "libcst>=1.0.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0.0",
+]
+
+[project.scripts]
+shrimport = "shrimport.main:main"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["shrimport*"]

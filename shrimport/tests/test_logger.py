@@ -1,13 +1,13 @@
 import logging
 
-from src.logger import get_logger
+from shrimport.logger import get_logger
 
 
 def test_get_logger_sets_level(monkeypatch):
     class DummyConfig:
         is_verbose = True
 
-    monkeypatch.setattr("src.logger.get_config", lambda: DummyConfig())
+    monkeypatch.setattr("shrimport.logger.get_config", lambda: DummyConfig())
     logger = get_logger()
     assert logger.level == logging.DEBUG
 
@@ -20,7 +20,7 @@ def test_get_logger_output(monkeypatch, capsys):
     class DummyConfig:
         is_verbose = False
 
-    monkeypatch.setattr("src.logger.get_config", lambda: DummyConfig())
+    monkeypatch.setattr("shrimport.logger.get_config", lambda: DummyConfig())
     logger = get_logger()
     logger.info("hello world")
     captured = capsys.readouterr()

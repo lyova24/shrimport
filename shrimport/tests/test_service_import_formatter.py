@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from src.config import Config
-from src.service.import_formatter import ImportFormatter
+from shrimport.config import Config
+from shrimport.service.import_formatter import ImportFormatter
 
 
 def make_file(path: Path, content: str):

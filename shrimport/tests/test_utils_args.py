@@ -2,7 +2,7 @@ import sys
 
 import pytest
 
-from src.utils.args import get_args
+from shrimport.utils.args import get_args
 
 
 def test_get_args_basic(monkeypatch):
@@ -20,7 +20,7 @@ def test_get_args_with_all_options(monkeypatch):
     test_args = [
         "prog",
         "-R",
-        "./src",
+        "./shrimport",
         "-i",
         "test_ignore",
         "-i",
@@ -32,7 +32,7 @@ def test_get_args_with_all_options(monkeypatch):
     ]
     monkeypatch.setattr(sys, "argv", test_args)
     args = get_args()
-    assert args.root_dir == "./src"
+    assert args.root_dir == "./shrimport"
     assert args.ignored_paths == ["test_ignore", "other_ignore"]
     assert args.is_verbose is True
     assert args.is_dry_run is True
