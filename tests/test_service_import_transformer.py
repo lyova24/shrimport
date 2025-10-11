@@ -14,7 +14,9 @@ def test_leave_importfrom_absolute(tmp_path):
     file_path.write_text("x")
     transformer = ImportTransformer(file_path, root_dir)
     node = cst.ImportFrom(
-        module=cst.Name("os"), names=[cst.ImportAlias(name=cst.Name("path"))], relative=[]
+        module=cst.Name("os"),
+        names=[cst.ImportAlias(name=cst.Name("path"))],
+        relative=[],
     )
     result = transformer.leave_ImportFrom(node, node)
     assert result is node
@@ -28,7 +30,9 @@ def test_leave_importfrom_relative(tmp_path):
     file_path.write_text("x")
     transformer = ImportTransformer(file_path, root_dir)
     node = cst.ImportFrom(
-        module=cst.Name("foo"), names=[cst.ImportAlias(name=cst.Name("bar"))], relative=[cst.Dot()]
+        module=cst.Name("foo"),
+        names=[cst.ImportAlias(name=cst.Name("bar"))],
+        relative=[cst.Dot()],
     )
     updated_node = node.with_changes()
     result = transformer.leave_ImportFrom(node, updated_node)

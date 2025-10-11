@@ -1,5 +1,5 @@
-from pathlib import Path
 from re import compile
+from typing import TYPE_CHECKING
 
 import libcst as cst
 
@@ -9,14 +9,22 @@ from src.utils import exit_if_path_is_not_a_dir, get_path_from_str, get_paths_fr
 
 from .import_transformer import ImportTransformer
 
+if TYPE_CHECKING:
+    from pathlib import Path
+    from typing import Pattern
+
+    from src.logger import ShrimportLogger
+
 
 class ImportFormatter:
     def __init__(self, config: Config):
-        self.logger = get_logger()
-        self.root_dir = get_path_from_str(config.root_dir).resolve()
-        self.file_paths = get_paths_from_list(config.file_paths)
-        self.ignore_patterns = list(set([compile(pattern) for pattern in config.ignored_paths]))
-        self.is_dry_run = config.is_dry_run
+        self.logger: "ShrimportLogger" = get_logger()
+        self.root_dir: "Path" = get_path_from_str(config.root_dir).resolve()
+        self.file_paths: list["Path"] = get_paths_from_list(config.file_paths)
+        self.ignore_patterns: list["Pattern"] = list(
+            set([compile(pattern) for pattern in config.ignored_paths])
+        )
+        self.is_dry_run: bool = config.is_dry_run
         exit_if_path_is_not_a_dir(self.root_dir)
 
     def convert_relative_imports(self) -> int:
@@ -37,7 +45,7 @@ class ImportFormatter:
                 changed += 1
         return exit_code
 
-    def _convert_imports(self, file_path: Path) -> bool:
+    def _convert_imports(self, file_path: "Path") -> bool:
         source = file_path.read_text(encoding="utf-8")
         tree = cst.parse_module(source)
 
