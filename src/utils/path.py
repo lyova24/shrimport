@@ -11,13 +11,15 @@ def get_paths_from_list(paths: list[str]) -> list[Path]:
 
 def get_module_path(file_path: Path, root_dir: Path) -> str | None:
     try:
-        relative_path = file_path.resolve().relative_to(root_dir.resolve()).with_suffix("")
+        relative_path = (
+            file_path.resolve().relative_to(root_dir.resolve()).with_suffix("")
+        )
     except ValueError:
         print(f"skip: {file_path} not in root_dir {root_dir}")
         return None
     return ".".join(relative_path.parts)
 
 
-def exit_if_path_is_not_a_dir(path: Path):
+def exit_if_path_is_not_a_dir(path: Path) -> None:
     if not path.is_dir():
         exit(f"path {path} is not a directory.")

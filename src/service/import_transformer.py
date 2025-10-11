@@ -8,16 +8,18 @@ from src.utils.code import get_code_for_node
 from src.utils.module import get_full_module_name
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     from libcst import ImportFrom
 
 
 class ImportTransformer(libcst.CSTTransformer):
     def __init__(self, file_path: Path, root_dir: Path):
         super().__init__()
-        self.changes = []
-        self.file_path = file_path
-        self.root_dir = root_dir
-        self.modified = False
+        self.changes: list[tuple[str, str]] = []
+        self.file_path: "Path" = file_path
+        self.root_dir: "Path" = root_dir
+        self.modified: bool = False
 
     def leave_ImportFrom(
         self,
@@ -54,5 +56,7 @@ class ImportTransformer(libcst.CSTTransformer):
             module=make_module_attr(new_module_str),
             relative=[],
         )
-        self.changes.append((get_code_for_node(original_node), get_code_for_node(new_node)))
+        self.changes.append(
+            (get_code_for_node(original_node), get_code_for_node(new_node))
+        )
         return new_node

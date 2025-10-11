@@ -31,6 +31,7 @@ def test_get_full_module_name_name():
 
 def test_get_full_module_name_attribute():
     node = cst.Attribute(
-        value=cst.Attribute(value=cst.Name("foo"), attr=cst.Name("bar")), attr=cst.Name("baz")
+        value=cst.Attribute(value=cst.Name("foo"), attr=cst.Name("bar")),
+        attr=cst.Name("baz"),
     )
     assert get_full_module_name(node) == "foo.bar.baz"

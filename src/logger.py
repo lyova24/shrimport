@@ -1,23 +1,27 @@
 import logging
 import sys
 from enum import StrEnum
+from typing import TYPE_CHECKING
 
 from src.config import get_config
 
+if TYPE_CHECKING:
+    from pathlib import Path
+
 
 class LogColor(StrEnum):
-    RED: str = "\033[91m"
-    GREEN: str = "\033[92m"
-    YELLOW: str = "\033[93m"
-    BLUE: str = "\033[94m"
-    RESET: str = "\033[0m"  # Used to reset color change
+    RED = "\033[91m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+    BLUE = "\033[94m"
+    RESET = "\033[0m"  # Used to reset color change
 
 
 class ShrimportLogger(logging.Logger):
     def __init__(self, name: str, level: int = logging.NOTSET) -> None:
         super().__init__(name=name, level=level)
 
-    def log_approved(self, file_path: str) -> None:
+    def log_approved(self, file_path: "Path") -> None:
         self._log(
             level=logging.DEBUG,
             msg=f"{LogColor.BLUE}Approved:{LogColor.RESET} {file_path}",
