@@ -1,6 +1,6 @@
 import logging
 import sys
-from enum import StrEnum
+from enum import Enum
 from typing import TYPE_CHECKING
 
 from shrimport.config import get_config
@@ -9,7 +9,7 @@ if TYPE_CHECKING:
     from pathlib import Path
 
 
-class LogColor(StrEnum):
+class LogColor(str, Enum):
     RED = "\033[91m"
     GREEN = "\033[92m"
     YELLOW = "\033[93m"
