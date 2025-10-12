@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 
 import libcst
 
+from shrimport.logger import get_logger
 from shrimport.utils import get_module_path, make_module_attr
 from shrimport.utils.code import get_code_for_node
 from shrimport.utils.module import get_full_module_name
@@ -12,10 +13,13 @@ if TYPE_CHECKING:
 
     from libcst import ImportFrom
 
+    from shrimport.logger import ShrimportLogger
+
 
 class ImportTransformer(libcst.CSTTransformer):
     def __init__(self, file_path: Path, root_dir: Path):
         super().__init__()
+        self.logger: "ShrimportLogger" = get_logger()
         self.changes: list[tuple[str, str]] = []
         self.file_path: "Path" = file_path
         self.root_dir: "Path" = root_dir
@@ -32,11 +36,12 @@ class ImportTransformer(libcst.CSTTransformer):
         level = len(original_node.relative) if original_node.relative else 0
         current_module = get_module_path(self.file_path, self.root_dir)
         if current_module is None:
+            self.logger.log_ignored(self.file_path, reason="not in root_dir")
             return original_node
 
         current_parts = current_module.split(".")
         if level > len(current_parts):
-            print(f"warn: level {level} too deep in {self.file_path}")
+            self.logger.log_ignored(self.file_path, reason=f"level {level} too deep")
             return original_node
 
         base_parts = current_parts[:-level]

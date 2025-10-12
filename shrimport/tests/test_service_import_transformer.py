@@ -39,7 +39,7 @@ def test_leave_importfrom_relative(tmp_path):
     assert result is node
 
 
-def test_leave_importfrom_too_deep(tmp_path, capsys):
+def test_leave_importfrom_too_deep(tmp_path):
     file_path = tmp_path / "pkg" / "mod.py"
     root_dir = tmp_path
     file_path.parent.mkdir(parents=True, exist_ok=True)
@@ -53,5 +53,3 @@ def test_leave_importfrom_too_deep(tmp_path, capsys):
     updated_node = node.with_changes()
     result = transformer.leave_ImportFrom(node, updated_node)
     assert result is node
-    captured = capsys.readouterr()
-    assert "warn: level" in captured.out
