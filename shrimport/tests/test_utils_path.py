@@ -35,15 +35,13 @@ def test_get_module_path_relative(tmp_path):
     assert module_path == "pkg.mod"
 
 
-def test_get_module_path_not_in_root(tmp_path, capsys):
+def test_get_module_path_not_in_root(tmp_path):
     root = tmp_path / "shrimport"
     root.mkdir()
     file = tmp_path / "other.py"
     file.write_text("x")
     result = get_module_path(file, root)
-    captured = capsys.readouterr()
     assert result is None
-    assert "skip:" in captured.out
 
 
 def test_exit_if_path_is_not_a_dir(tmp_path):

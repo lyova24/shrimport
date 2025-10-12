@@ -30,7 +30,7 @@ class ShrimportLogger(logging.Logger):
 
     def log_changes(self, from_code: str, to_code: str) -> None:
         self._log(
-            level=logging.WARNING,
+            level=logging.INFO,
             msg=f"\t{LogColor.RED}{from_code}{LogColor.RESET} -> {LogColor.GREEN}{to_code}{LogColor.RESET}",
             args=(),
         )
@@ -49,10 +49,11 @@ class ShrimportLogger(logging.Logger):
             args=(),
         )
 
-    def log_ignored(self, file_path: "Path") -> None:
+    def log_ignored(self, file_path: "Path", reason: str | None = None) -> None:
+        reason_part = f" [{reason}]" if reason is not None else ""
         self._log(
-            level=logging.WARNING,
-            msg=f"Ignored: {file_path}",
+            level=logging.DEBUG,
+            msg=f"Ignored{reason_part}: {file_path}",
             args=(),
         )
 

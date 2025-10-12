@@ -15,7 +15,6 @@ def get_module_path(file_path: Path, root_dir: Path) -> str | None:
             file_path.resolve().relative_to(root_dir.resolve()).with_suffix("")
         )
     except ValueError:
-        print(f"skip: {file_path} not in root_dir {root_dir}")
         return None
     return ".".join(relative_path.parts)
 
