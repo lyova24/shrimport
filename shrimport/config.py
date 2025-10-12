@@ -2,12 +2,13 @@ import dataclasses
 from dataclasses import dataclass, field, fields
 from functools import lru_cache
 
+from shrimport.constants import ROOT_DIR_PATH
 from shrimport.utils import get_args
 
 
 @dataclass
 class Config:
-    root_dir: str = "./"
+    root_dir: str = ROOT_DIR_PATH
     is_verbose: bool = False
     is_dry_run: bool = False
     file_paths: list[str] = field(default_factory=list)
