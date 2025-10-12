@@ -1,12 +1,13 @@
 from pathlib import Path
 
 from shrimport.config import Config
+from shrimport.constants import DEFAULT_TEXT_ENCODING
 from shrimport.service.import_formatter import ImportFormatter
 
 
 def make_file(path: Path, content: str):
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(content, encoding="utf-8")
+    path.write_text(content, encoding=DEFAULT_TEXT_ENCODING)
 
 
 def test_import_formatter_dry_run(tmp_path):
@@ -43,7 +44,7 @@ def test_import_formatter_real_run(tmp_path):
     formatter = ImportFormatter(config)
     exit_code = formatter.convert_relative_imports()
     assert exit_code == 0
-    content = file1.read_text(encoding="utf-8")
+    content = file1.read_text(encoding=DEFAULT_TEXT_ENCODING)
     assert "from .foo import bar" in content
 
 

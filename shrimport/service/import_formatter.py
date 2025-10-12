@@ -1,9 +1,11 @@
+import os
 from re import compile
 from typing import TYPE_CHECKING
 
 import libcst as cst
 
 from shrimport.config import Config
+from shrimport.constants import DEFAULT_TEXT_ENCODING, PYTHON_FILE_EXTENSION
 from shrimport.logger import get_logger
 from shrimport.utils import (
     exit_if_path_is_not_a_dir,
@@ -32,12 +34,12 @@ class ImportFormatter:
         exit_if_path_is_not_a_dir(self.root_dir)
 
     def convert_relative_imports(self) -> int:
-        exit_code = 0
+        exit_code = os.EX_OK
         scanned, changed = 0, 0
         for file_path in self.file_paths:
             if (
                 not file_path.is_file()
-                or not file_path.name.endswith(".py")
+                or not file_path.name.endswith(PYTHON_FILE_EXTENSION)
                 or any(pat.search(str(file_path)) for pat in self.ignore_patterns)
             ):
                 self.logger.log_ignored(file_path)
@@ -45,12 +47,12 @@ class ImportFormatter:
 
             scanned += 1
             if self._convert_imports(file_path):
-                exit_code = 1
+                exit_code = os.EX_DATAERR
                 changed += 1
         return exit_code
 
     def _convert_imports(self, file_path: "Path") -> bool:
-        source = file_path.read_text(encoding="utf-8")
+        source = file_path.read_text(encoding=DEFAULT_TEXT_ENCODING)
         tree = cst.parse_module(source)
 
         transformer = ImportTransformer(file_path, self.root_dir)
@@ -61,7 +63,7 @@ class ImportFormatter:
                 self.logger.log_disapproved(file_path=file_path)
             else:
                 self.logger.log_file_changed(file_path=file_path)
-                file_path.write_text(modified_tree.code, encoding="utf-8")
+                file_path.write_text(modified_tree.code, encoding=DEFAULT_TEXT_ENCODING)
             for change in transformer.changes:
                 self.logger.log_changes(from_code=change[0], to_code=change[1])
             return True
