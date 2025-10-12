@@ -3,10 +3,10 @@ name: execution-test
 on:
   pull_request:
     branches:
-      - main
+      - master
   push:
     branches:
-      - main
+      - master
 
 jobs:
   execution-test:
@@ -23,7 +23,7 @@ jobs:
           mkdir /tmp/dummy-repo
           cd /tmp/dummy-repo
           git init
-          
+
           mkdir ./src
           touch ./src/__init__.py
           mkdir ./src/pkg1
@@ -33,9 +33,9 @@ jobs:
           touch ./src/pkg2/__init__.py
           touch ./src/pkg2/foo.py
 
-          echo "from ..pkg2 import foo" > ./src/pkg1/bar.py 
+          echo "from ..pkg2 import foo" > ./src/pkg1/bar.py
           echo "var = 1" > ./src/pkg2/foo.py
-          
+
           cat > .pre-commit-config.yaml <<EOF
           repos:
             - repo: ${{ github.server_url }}/${{ github.repository }}
@@ -45,10 +45,10 @@ jobs:
                   verbose: true
                   args: ['-v', '-R=./src']
           EOF
-          
+
           git add .
           pre-commit install
-          
+
           echo "checking for hook being not skipped"
           set +e
           OUTPUT=$(pre-commit run --all-files --show-diff-on-failure 2>&1)
