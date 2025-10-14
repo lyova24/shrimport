@@ -18,7 +18,8 @@
 
 ----
 
-- Used for **PR** in [django_mongodb_backend](https://github.com/mongodb/django-mongodb-backend/pull/415/files)
+- Used for [**django** contribution](https://github.com/django/django/pull/19707/files).
+- Used for [**django_mongodb_backend** contribution](https://github.com/mongodb/django-mongodb-backend/pull/415/files).
 
 ----
 
